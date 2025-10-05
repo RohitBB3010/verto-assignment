@@ -1,10 +1,16 @@
 import express from 'express';
-import { PrismaClient } from '@prisma/client';
+import errorHandler from './middleware/errorHandler.js';
+import routes from './routes.js';
 
 const app = express();
 
-app.listen(8000).then(() => {
-    console.log(`App connected`);
-}).catch((err) => {
-    console.error(`Error : ${err.message}`);
-}) 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use('/api/employees', routes);
+app.use(errorHandler);
+
+const PORT = 8000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});

@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model employee {
+  id            Int       @id @default(autoincrement())
+  name          String
+  email         String    @unique
+  phone         String?
+  department    Deparment
+  role          Role
+  dateOfJoining DateTime
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime
+}
+
+enum Deparment {
+  ENGINEERING
+  HUMAN_RESOURCES
+  SALES
+  MARKETING
+  CUSTOMER_SERVICE
+  FINANCE
+  OPERATIONS
+  LEGAL
+}
+
+enum Role {
+  INTERN
+  JUNIOR_ENGINEER
+  SENIOR_ENGINEER
+  PROJECT_MANAGER
+  TEAM_LEAD
+  DEVOPS_ENGINEER
+  HR_ASSOCIATE
+  SALES_JUNIOR_EXECUTIVE
+  SALES_SENIOR_EXECUTIVE
+  MARKETING_EXECUTIVE
+  FINANCE_MANAGER
+  FINANCE_ANALYST
+  CUSTOMER_ASSOCIATE
+}
