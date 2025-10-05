@@ -1,0 +1,6 @@
+#backend 
+verto_backend/.env
+verto_backend/node_modules/
+
+#frontend
+verto_frontend/node_modules/
