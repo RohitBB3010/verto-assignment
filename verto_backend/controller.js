@@ -58,6 +58,7 @@ export const deleteEmployee = async (req, res, next) => {
                 errors : errors.array()
             });
         }
+        
         const { employeeId } = req.params;
 
         const deletedEmployee = await prisma.employee.delete({ 
