@@ -13,10 +13,10 @@ export const addEmployee = async (req, res, next) => {
             })
         }
         
-        const {name, email, phone, role, department, dateOfJoining} = req.body;
+        const {name, email, phone, role, dateOfJoining} = req.body;
 
         const employee = await prisma.employee.create({
-            data :{name, email, phone, role, department, dateOfJoining}
+            data :{name, email, phone, role, dateOfJoining}
         });
 
         return res.status(201).json({

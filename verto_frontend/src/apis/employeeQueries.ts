@@ -4,6 +4,7 @@ import { fetchEmployees } from "./employeeAPIs";
 export default function useFetchEmployees(){
     return useQuery({
         queryFn : fetchEmployees,
-       queryKey : ['employees'] 
+       queryKey : ['employees'],
+       staleTime : 1000
     });
 }

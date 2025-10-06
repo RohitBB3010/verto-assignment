@@ -15,21 +15,9 @@ model employee {
   name String 
   email String @unique
   phone String
-  department Deparment
   role Role 
   dateOfJoining DateTime
 } 
-
-enum Deparment{
-  ENGINEERING
-  HUMAN_RESOURCES
-  SALES
-  MARKETING
-  CUSTOMER_SERVICE
-  FINANCE
-  OPERATIONS 
-  LEGAL
-}
 
 enum Role{
   INTERN

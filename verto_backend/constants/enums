@@ -1,15 +1,4 @@
 
-export const Departments = [
-  "ENGINEERING",
-  "HUMAN_RESOURCES",
-  "SALES",
-  "MARKETING",
-  "CUSTOMER_SERVICE",
-  "FINANCE",
-  "OPERATIONS",
-  "LEGAL"
-];
-
 export const Roles = [
   "INTERN",
   "JUNIOR_ENGINEER",

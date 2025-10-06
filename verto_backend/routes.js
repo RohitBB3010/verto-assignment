@@ -6,7 +6,7 @@ import {
   updateEmployeeData,
 } from "./controller.js";
 import { body, param } from "express-validator";
-import { Departments, Roles } from "./constants/enums";
+import { Roles } from "./constants/enums";
 
 const routes = Router();
 
@@ -22,10 +22,6 @@ routes.post(
       .trim()
       .matches(/^[0-9]{10}$/)
       .withMessage("Phone number must be atleast 10 characters long"),
-    body("department")
-      .trim()
-      .isIn(Departments)
-      .withMessage("Invalid department"),
     body("role").trim().isIn(Roles).withMessage("Invalid role"),
     body("dateOfJoinig").optional().isISO8601().withMessage("Invalid date"),
   ],
@@ -49,10 +45,6 @@ routes.put(
       .trim()
       .matches(/^[0-9]{10}$/)
       .withMessage("Phone number must be atleast 10 characters long"),
-    body("department").optional()
-      .trim()
-      .isIn(Departments)
-      .withMessage("Invalid department"),
     body("role").optional().trim().isIn(Roles).withMessage("Invalid role"),
     body("dateOfJoinig").optional().isISO8601().withMessage("Invalid date"),
   ],
