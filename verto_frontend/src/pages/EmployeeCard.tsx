@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { getRoleLabels } from "../utils/getLabels";
 import { formatDate } from "../utils/formatDates";
 import { FiDelete, FiEdit } from "react-icons/fi";
+import { useDeleteEmployee } from "../apis/employeeQueries";
 
 export default function EmployeeCard({
   employee,
@@ -22,9 +23,10 @@ export default function EmployeeCard({
     }).toDataUri();
   }, [employee.id, employee.name]);
 
+  const {mutate : deleteEmployee} = useDeleteEmployee();
+
   return (
     <div className="employee-card w-full flex flex-row bg-[var(--color-card)] my-3 rounded-2xl py-4 pl-6 pr-1 justify-between shadow-md hover:shadow-lg transition-shadow duration-300">
-      {/* Left panel */}
       <div className="left-panel flex items-center">
         <img
           src={avatarSvg}
@@ -68,7 +70,7 @@ export default function EmployeeCard({
               </button>
               <button
                 className="w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600 flex items-center cursor-pointer"
-                onClick={() => {}}
+                onClick={() => { deleteEmployee(employee.id) }}
               >
                 <FiDelete className="mr-2" />
                 Delete
