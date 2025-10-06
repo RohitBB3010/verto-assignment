@@ -20,7 +20,7 @@ routes.post(
     body("email").trim().isEmail().withMessage("Email address is invalid"),
     body("phone")
       .trim()
-      .matches(/^[6-9]{10}$/)
+      .matches(/^[6-9]\d{9}$/)
       .withMessage("Phone number must be atleast 10 characters long"),
     body("role").trim().isIn(Roles).withMessage("Invalid role"),
     body("dateOfJoining").isISO8601().withMessage("Invalid date"),
@@ -43,7 +43,7 @@ routes.put(
     body("email").optional().trim().isEmail().withMessage("Email address is invalid"),
     body("phone").optional()
       .trim()
-      .matches(/^[0-9]{10}$/)
+      .matches(/^[6-9]\d{9}$/)
       .withMessage("Phone number must be atleast 10 characters long"),
     body("role").optional().trim().isIn(Roles).withMessage("Invalid role"),
     body("dateOfJoinig").optional().isISO8601().withMessage("Invalid date"),

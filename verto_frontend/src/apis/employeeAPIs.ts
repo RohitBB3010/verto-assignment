@@ -1,5 +1,4 @@
 import axios from "axios";
-import type { Role } from "../constants/enums";
 import type { AddEmployeeFormInput } from "../types/employee";
 
 export const fetchEmployees = async () => {
@@ -14,7 +13,7 @@ export const addEmployeee = async ({
     name, email, phone, role, dateOfJoining
 } : AddEmployeeFormInput ) => {
 
-    //await new Promise((resolve) => setTimeout(resolve, 5000));
+    await new Promise((resolve) => setTimeout(resolve, 5000));
     const url = `${import.meta.env.VITE_BASE_API_URL}/add-employee`;
 
     const formattedDate = new Date(dateOfJoining).toISOString();
@@ -39,7 +38,7 @@ export const updateEmployee = async (
 ) => {
 
     const url = `${import.meta.env.VITE_BASE_API_URL}/update-employee/${employeeId}`;
-    
+    await new Promise((resolve) => setTimeout(resolve, 5000));
     const payload : Record<string, any> = {};
         if(data.name !== undefined) payload.name = data.name;
         if(data.email !== undefined) payload.email = data.email;

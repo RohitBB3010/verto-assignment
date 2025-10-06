@@ -5,7 +5,7 @@ import CustomButton from "../components/CustomButton";
 import FormInput from "../components/FormInput";
 import type { AddEmployeeFormInput, Employee } from "../types/employee";
 import { useAddEmployee, useUpdateEmployee } from "../apis/employeeQueries";
-import { useEffect, type Dispatch, type SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 
 export default function AddEmployee({
   employee,
@@ -21,32 +21,23 @@ export default function AddEmployee({
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors, dirtyFields },
   } = useForm<AddEmployeeFormInput>({
     mode: "onChange",
-    defaultValues: {},
+    defaultValues: employee ? {
+      name : employee.name,
+      email : employee.email,
+      phone : employee.phone,
+      dateOfJoining: employee.dateOfJoining
+        ? new Date(employee.dateOfJoining).toISOString().split("T")[0]
+        : "",
+      role : employee.role
+    } : {},
   });
 
-  useEffect(() => {
-    if (employee) {
-      reset({
-        name: employee.name,
-        email: employee.email,
-        phone: employee.phone,
-        role: employee.role,
-        dateOfJoining: employee.dateOfJoining
-          ? new Date(employee.dateOfJoining).toISOString().split("T")[0]
-          : "",
-      });
-    } else {
-      reset({});
-    }
-  }, [employee]);
+  const { mutate: addEmployee, isPending : isPendingAddEmployee} = useAddEmployee(toggleIsOpen);
 
-  const { mutate: addEmployee, isPending } = useAddEmployee(toggleIsOpen);
-
-  const { mutate: updateEmployeeData } = useUpdateEmployee(() => {
+  const { mutate: updateEmployeeData, isPending : isPendingUpdateEmployee } = useUpdateEmployee(() => {
     toggleIsOpen();
     setSelectedEmployee(null);
   });
@@ -80,10 +71,13 @@ export default function AddEmployee({
       <div className="modal-content flex flex-col bg-[var(--color-background)] z-50 justify-center items-center w-[30%] rounded-lg shadow-lg p-4">
         <div className="title flex w-full justify-between items-center mb-4">
           <div></div>
-          <div className="text-xl font-semibold">Add Employee</div>
+          <div className="text-xl font-semibold">{employee ? "Edit Employee Data" : "Add Employee"}</div>
           <button
             className="text-red-700 text-xl cursor-pointer"
-            onClick={toggleIsOpen}
+            onClick={() => {
+              toggleIsOpen();
+              setSelectedEmployee(null);
+            }}
           >
             <FiX />
           </button>
@@ -161,9 +155,9 @@ export default function AddEmployee({
         </div>
         <CustomButton
           onClick={handleSubmit(onSubmit)}
-          buttonText={isPending ? "Adding..." : "Add Employee"}
+          buttonText={employee ? isPendingUpdateEmployee ? "Updating..." : "Update Employee Data" : isPendingAddEmployee ? "Adding..." : "Add Employee"}
           containerClass="my-3"
-          isLoading={isPending}
+          isLoading={isPendingAddEmployee || isPendingUpdateEmployee}
         />
       </div>
     </div>

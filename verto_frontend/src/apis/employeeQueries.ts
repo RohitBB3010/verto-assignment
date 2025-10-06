@@ -30,14 +30,25 @@ export const useAddEmployee = (
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["employees"] });
       onSuccessCallback();
-      toast("Sucessfully added new employee", {
-        autoClose: 3000,
+      toast.success("Sucessfully added new employee", {
+        autoClose: 2000,
         hideProgressBar: false,
         position: "top-center",
       });
     },
-    onError: (error) => {
-      //console.log(error);
+    onError: (error: any) => {
+      // If backend sent validation errors
+      if (error.response?.data?.errors) {
+        error.response.data.errors.forEach((err: any) =>
+          toast.error(err.msg, { position: "top-center" })
+        );
+      } 
+      else {
+        toast.error(
+          error.response?.data?.message || "Failed to add employee",
+          { position: "top-center" }
+        );
+      }
     },
   });
 };
@@ -48,7 +59,7 @@ export const useDeleteEmployee = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["employees"] });
       toast("Deleted employee", {
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         position: "top-center",
       });
@@ -65,7 +76,19 @@ export const useUpdateEmployee = (onSuccessCallback? : () => void) => {
     onSuccess : () => {
         queryClient.invalidateQueries({queryKey : ['employees']});
         onSuccessCallback?.();
-        toast('Employee record updated', {position : "top-center", hideProgressBar : false, autoClose : 3000})
-    }
+        toast.success('Employee record updated', {position : "top-center", hideProgressBar : false, autoClose : 2000})
+    },
+    onError: (error: any) => {
+      if (error.response?.data?.errors) {
+        error.response.data.errors.forEach((err: any) =>
+          toast.error(err.msg, { position: "top-center" })
+        );
+      } else {
+        toast.error(
+          error.response?.data?.message || "Failed to update employee",
+          { position: "top-center" }
+        );
+      }
+    },
   });
 };

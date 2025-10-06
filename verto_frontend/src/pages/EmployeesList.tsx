@@ -31,7 +31,6 @@ export default function EmployeesList({
             <EmployeeCard
               key={employee.id}
               isMenuOpen = {isMenuOpen}
-        
               setMenuOpen={() => {
                 isMenuOpen ? setSelectedEmployee(null) : setSelectedEmployee(employee);
               }}
