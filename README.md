@@ -4,6 +4,10 @@
 A simple web-based application to manage employee data, built with **React (frontend)** and **Node.js + SQLite (backend)**.  
 The app allows users to **add, view, update, and delete employees**. Employees have attributes like **name, email, phone, role, and date of joining**.
 
+## **Tech Stack**
+
+### FRONTEND : React, Typescript, React-Query
+### BACKEND : NodeJs, ExpressJs,SQLite
 ---
 
 ## **Features**
@@ -19,7 +23,6 @@ The app allows users to **add, view, update, and delete employees**. Employees h
 - Edit existing employees with form prefilled.
 - Delete employees directly from the list.
 - Filter employees by **name, email, or role**.
-- Responsive design and clean UI.
 
 ---
 
@@ -40,14 +43,6 @@ cd verto_backend
 npm install
 npx prisma generate
 ```
-
-* Create a `.env` file with the following content:
-
-```
-DATABASE_URL="file:./dev.db"
-PORT = 5000;
-```
-
 * Start the backend server:
 
 ```bash
