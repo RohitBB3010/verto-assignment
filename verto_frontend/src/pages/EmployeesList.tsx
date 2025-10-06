@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useFetchEmployees } from "../apis/employeeQueries";
 import CustomButton from "../components/CustomButton";
 import type { Employee } from "../types/employee";
@@ -6,6 +7,7 @@ import EmployeeCard from "./EmployeeCard";
 export default function EmployeesList({toggleIsOpen} : {toggleIsOpen : () => void}) {
   const { data, isLoading } = useFetchEmployees();
   const employees : Employee[] = data ?? [];
+  const [menuOpenId, setMenuOpenId] = useState<number | null>(null);
 
   return (
     isLoading ? <div>Loading</div> : 
@@ -16,7 +18,8 @@ export default function EmployeesList({toggleIsOpen} : {toggleIsOpen : () => voi
       </div>
       <div className="employees-list block h-full overflow-y-auto">
         { employees.map((employee) => {
-          return <EmployeeCard key={employee.id} employee={employee}/>
+          const isOpen = menuOpenId === employee.id;
+          return <EmployeeCard key={employee.id} employee={employee} isMenuOpen={isOpen} setMenuOpen={() => setMenuOpenId(() => isOpen ? null : employee.id)}/>
         }) }
       </div>
     </div>
