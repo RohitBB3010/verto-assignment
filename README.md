@@ -38,6 +38,7 @@ cd verto-assignment
 ```bash
 cd verto_backend
 npm install
+npx prisma generate
 ```
 
 * Create a `.env` file with the following content:
