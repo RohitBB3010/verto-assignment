@@ -43,7 +43,8 @@ npm install
 * Create a `.env` file with the following content:
 
 ```
-VITE_PORT=5000
+DATABASE_URL="file:./dev.db"
+PORT = 5000;
 ```
 
 * Start the backend server:
