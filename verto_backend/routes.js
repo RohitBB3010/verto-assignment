@@ -20,7 +20,7 @@ routes.post(
     body("email").trim().isEmail().withMessage("Email address is invalid"),
     body("phone")
       .trim()
-      .matches(/^[0-9]{10}$/)
+      .matches(/^[6-9]{10}$/)
       .withMessage("Phone number must be atleast 10 characters long"),
     body("role").trim().isIn(Roles).withMessage("Invalid role"),
     body("dateOfJoining").isISO8601().withMessage("Invalid date"),
@@ -33,7 +33,7 @@ routes.get("/fetch-employees", fetchEmployees);
 routes.delete("/delete-employee/:employeeId", param('employeeId').isInt({gt:0}).withMessage("employeeId must be a valid positive integer").toInt(), deleteEmployee);
 
 routes.put(
-  "/update-employee-data/:employeeId",
+  "/update-employee/:employeeId",
   [
     param('employeeId').isInt({gt:0}).withMessage("employeeId must be a valid positive integer").toInt(),
     body("name").optional()

@@ -10,18 +10,26 @@ export default function EmployeesPage() {
   );
   const [isAddPageOpen, setIsAddPageOpen] = useState<boolean>(false);
 
-  function toggleIsOpen(){
-    setIsAddPageOpen(prevIsOpen => !prevIsOpen);
+  function toggleIsOpen() {
+    setIsAddPageOpen((prevIsOpen) => !prevIsOpen);
   }
+
+  console.log(selectedEmployee);
 
   return (
     <div className="employees-page bg-[var(--color-background)] w-full h-full rounded-md flex">
       <div className="w-full h-full flex flex-row">
         <FiltersPanel />
-        <EmployeesList toggleIsOpen={toggleIsOpen}/>
+        <EmployeesList
+          toggleIsOpen={toggleIsOpen}
+          selectedEmployee={selectedEmployee}
+          setSelectedEmployee = {setSelectedEmployee}
+        />
       </div>
 
-      {isAddPageOpen && <AddEmployee toggleIsOpen={toggleIsOpen} />}
+      {isAddPageOpen && (
+        <AddEmployee toggleIsOpen={toggleIsOpen} employee={selectedEmployee} setSelectedEmployee={setSelectedEmployee}/>
+      )}
     </div>
   );
 }

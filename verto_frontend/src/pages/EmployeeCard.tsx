@@ -1,7 +1,7 @@
 import type { Employee } from "../types/employee";
 import { lorelei } from "@dicebear/collection";
 import { createAvatar } from "@dicebear/core";
-import { useMemo, useState } from "react";
+import { useMemo, useState, type Dispatch, type SetStateAction } from "react";
 import { getRoleLabels } from "../utils/getLabels";
 import { formatDate } from "../utils/formatDates";
 import { FiDelete, FiEdit } from "react-icons/fi";
@@ -11,10 +11,11 @@ export default function EmployeeCard({
   employee,
   isMenuOpen,
   setMenuOpen,
-}: {
+  toggleIsAddPageOpen}: {
   employee: Employee;
   isMenuOpen: boolean;
   setMenuOpen: () => void;
+  toggleIsAddPageOpen : () => void,
 }) {
   const avatarSvg = useMemo(() => {
     return createAvatar(lorelei, {
@@ -63,7 +64,9 @@ export default function EmployeeCard({
             <div className="absolute top-full right-0 mt-1 w-32 bg-white shadow-lg rounded-md border border-gray-200 z-10 flex flex-col">
               <button
                 className="w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center cursor-pointer"
-                onClick={() => {}}
+                onClick={() => {
+                  toggleIsAddPageOpen();
+                }}
               >
                 <FiEdit className="mr-2" />
                 Edit

@@ -1,28 +1,76 @@
 import { useForm } from "react-hook-form";
 import { FiX } from "react-icons/fi";
-import { Roles } from "../constants/enums";
+import { Roles, type Role } from "../constants/enums";
 import CustomButton from "../components/CustomButton";
 import FormInput from "../components/FormInput";
-import type { AddEmployeeFormInput } from "../types/employee";
-import { useAddEmployee } from "../apis/employeeQueries";
+import type { AddEmployeeFormInput, Employee } from "../types/employee";
+import { useAddEmployee, useUpdateEmployee } from "../apis/employeeQueries";
+import { useEffect, type Dispatch, type SetStateAction } from "react";
 
 export default function AddEmployee({
+  employee,
   toggleIsOpen,
+  setSelectedEmployee
 }: {
+  employee?: Employee | null;
   toggleIsOpen: () => void;
+  setSelectedEmployee : Dispatch<SetStateAction<Employee | null>>,
 }) {
+  console.log(employee);
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    reset,
+    formState: { errors, dirtyFields },
   } = useForm<AddEmployeeFormInput>({
     mode: "onChange",
+    defaultValues: {},
   });
 
-  const { mutate : addEmployee, isPending} = useAddEmployee(toggleIsOpen);
+  useEffect(() => {
+    if (employee) {
+      reset({
+        name: employee.name,
+        email: employee.email,
+        phone: employee.phone,
+        role: employee.role,
+        dateOfJoining: employee.dateOfJoining
+          ? new Date(employee.dateOfJoining).toISOString().split("T")[0]
+          : "",
+      });
+    } else {
+      reset({});
+    }
+  }, [employee]);
 
-  function onSubmit(data : AddEmployeeFormInput) : void {
-    addEmployee(data);
+  const { mutate: addEmployee, isPending } = useAddEmployee(toggleIsOpen);
+
+  const { mutate: updateEmployeeData } = useUpdateEmployee(() => {
+    toggleIsOpen();
+    setSelectedEmployee(null);
+  });
+
+  function onSubmit(data: AddEmployeeFormInput): void {
+    if (employee === null) {
+      addEmployee(data);
+      return;
+    }
+
+    const editedFields: Partial<AddEmployeeFormInput> = {};
+
+    Object.keys(dirtyFields).forEach((key) => {
+      const field = key as keyof AddEmployeeFormInput;
+      if (field === "dateOfJoining") {
+        editedFields.dateOfJoining = new Date(data.dateOfJoining as string);
+      } else if (field === "role") {
+        editedFields.role = data.role as Role;
+      } else {
+        editedFields[field] = data[field];
+      }
+    });
+
+    updateEmployeeData({ employeeId: employee!.id, data: editedFields });
   }
 
   return (
@@ -59,7 +107,7 @@ export default function AddEmployee({
           placeHolder="Email"
           fieldName="email"
           rules={{
-            required : "Email is required",
+            required: "Email is required",
             pattern: {
               value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, // simple email regex
               message: "Enter a valid email address",
@@ -98,17 +146,22 @@ export default function AddEmployee({
         <div className="flex flex-row justify-between w-[80%] my-3">
           <div>Date Of Joining</div>
           <input
-          {...register('dateOfJoining', {
-            required : "Date of joining is required"
-          })}
+            {...register("dateOfJoining", {
+              required: "Date of joining is required",
+            })}
             type="Date"
             className="py-1 px-1 focus:outline-none focus:ring-1 focus:ring-blue-500 bg-gray-200 rounded-sm cursor-pointer"
           />
-          {errors.dateOfJoining && <div className="text-sm text-red-600"> {errors.dateOfJoining?.message} </div>}
+          {errors.dateOfJoining && (
+            <div className="text-sm text-red-600">
+              {" "}
+              {errors.dateOfJoining?.message}{" "}
+            </div>
+          )}
         </div>
         <CustomButton
           onClick={handleSubmit(onSubmit)}
-          buttonText={isPending ? "Adding..."  : "Add Employee"}
+          buttonText={isPending ? "Adding..." : "Add Employee"}
           containerClass="my-3"
           isLoading={isPending}
         />

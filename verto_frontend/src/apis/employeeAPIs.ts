@@ -33,3 +33,21 @@ export const deleteEmployee = async (employeeId : number) => {
 
     return response.data;
 }
+
+export const updateEmployee = async (
+    employeeId : number, data : Partial<AddEmployeeFormInput>
+) => {
+
+    const url = `${import.meta.env.VITE_BASE_API_URL}/update-employee/${employeeId}`;
+    
+    const payload : Record<string, any> = {};
+        if(data.name !== undefined) payload.name = data.name;
+        if(data.email !== undefined) payload.email = data.email;
+        if(data.phone !== undefined) payload.phone = data.phone;
+        if(data.role !== undefined) payload.role = data.role;
+        if(data.dateOfJoining !== undefined) payload.dateOfJoining = data.dateOfJoining;
+
+    const response = await axios.put(url, payload);
+
+    return response.data;
+}
