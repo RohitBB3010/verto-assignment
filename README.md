@@ -28,7 +28,7 @@ The app allows users to **add, view, update, and delete employees**. Employees h
 ### 1. Clone the repository
 ```bash
 git clone https://github.com/your-username/employee-data-management.git
-cd verto_assignment
+cd verto-assignment
 ````
 
 ---
