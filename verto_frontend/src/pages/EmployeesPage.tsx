@@ -2,17 +2,26 @@ import { useState } from "react";
 import { type Employee } from "../types/employee";
 import FiltersPanel from "./FiltersPanel";
 import EmployeesList from "./EmployeesList";
-import EmployeeInfoPanel from "./EmployeeInfoPanel";
+import AddEmployee from "./AddEmployeePage";
 
-export default function EmployeesPage(){
-    const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
-    const [isFilterOpen, setIsFilterOpen] = useState<boolean>(true);
+export default function EmployeesPage() {
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
+    null
+  );
+  const [isAddPageOpen, setIsAddPageOpen] = useState<boolean>(false);
 
-    return(
-        <div className="employees-page bg-[var(--color-background)] w-full h-full rounded-md flex">
-            {isFilterOpen && <FiltersPanel />}
-            <EmployeesList />
-            { selectedEmployee && <EmployeeInfoPanel /> }
-        </div>
-    );
+  function toggleIsOpen(){
+    setIsAddPageOpen(prevIsOpen => !prevIsOpen);
+  }
+
+  return (
+    <div className="employees-page bg-[var(--color-background)] w-full h-full rounded-md flex">
+      <div className="w-full h-full flex flex-row">
+        <FiltersPanel />
+        <EmployeesList toggleIsOpen={toggleIsOpen}/>
+      </div>
+
+      {isAddPageOpen && <AddEmployee toggleIsOpen={toggleIsOpen} />}
+    </div>
+  );
 }

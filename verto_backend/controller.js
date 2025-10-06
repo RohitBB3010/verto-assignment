@@ -32,11 +32,14 @@ export const addEmployee = async (req, res, next) => {
 
 export const fetchEmployees = async (req, res, next) => {
     try{
-        
+        console.log("Fetch request recevied");
+
         const employees = await prisma.employee.findMany({
             orderBy : {id : 'asc'}
         });
 
+        console.log(employees);
+        
         return res.status(200).json({
             success : true,
             message : "Employees data fetched",
