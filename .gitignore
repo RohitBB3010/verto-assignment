@@ -4,3 +4,4 @@ verto_backend/node_modules/
 
 #frontend
 verto_frontend/node_modules/
+verto_frontend/.env
