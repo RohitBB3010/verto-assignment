@@ -2,7 +2,7 @@ import type { Employee } from "../types/employee";
 import { lorelei } from "@dicebear/collection";
 import { createAvatar } from "@dicebear/core";
 import { useMemo } from "react";
-import { getDepartmentLabels, getRoleLabels } from "../utils/getLabels";
+import { getRoleLabels } from "../utils/getLabels";
 import { formatDate } from "../utils/formatDates";
 
 export default function EmployeeCard({ employee }: { employee: Employee }) {

@@ -16,7 +16,7 @@ export default function EmployeesList({toggleIsOpen} : {toggleIsOpen : () => voi
       </div>
       <div className="employees-list">
         { employees.map((employee) => {
-          return <EmployeeCard employee={employee}/>
+          return <EmployeeCard key={employee.id} employee={employee}/>
         }) }
       </div>
     </div>
