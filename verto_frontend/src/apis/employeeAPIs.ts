@@ -13,6 +13,8 @@ export const fetchEmployees = async () => {
 export const addEmployeee = async ({
     name, email, phone, role, dateOfJoining
 } : AddEmployeeFormInput ) => {
+
+    //await new Promise((resolve) => setTimeout(resolve, 5000));
     const url = `${import.meta.env.VITE_BASE_API_URL}/add-employee`;
 
     const formattedDate = new Date(dateOfJoining).toISOString();

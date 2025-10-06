@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { FiX } from "react-icons/fi";
-import { Departments, Roles, type Department, type Role } from "../constants/enums";
+import { Roles } from "../constants/enums";
 import CustomButton from "../components/CustomButton";
 import FormInput from "../components/FormInput";
 import type { AddEmployeeFormInput } from "../types/employee";
@@ -19,7 +19,7 @@ export default function AddEmployee({
     mode: "onChange",
   });
 
-  const { mutate : addEmployee } = useAddEmployee(toggleIsOpen);
+  const { mutate : addEmployee, isPending} = useAddEmployee(toggleIsOpen);
 
   function onSubmit(data : AddEmployeeFormInput) : void {
     addEmployee(data);
@@ -59,6 +59,7 @@ export default function AddEmployee({
           placeHolder="Email"
           fieldName="email"
           rules={{
+            required : "Email is required",
             pattern: {
               value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, // simple email regex
               message: "Enter a valid email address",
@@ -97,15 +98,19 @@ export default function AddEmployee({
         <div className="flex flex-row justify-between w-[80%] my-3">
           <div>Date Of Joining</div>
           <input
-          {...register('dateOfJoining')}
+          {...register('dateOfJoining', {
+            required : "Date of joining is required"
+          })}
             type="Date"
             className="py-1 px-1 focus:outline-none focus:ring-1 focus:ring-blue-500 bg-gray-200 rounded-sm cursor-pointer"
-          ></input>
+          />
+          {errors.dateOfJoining && <div className="text-sm text-red-600"> {errors.dateOfJoining?.message} </div>}
         </div>
         <CustomButton
           onClick={handleSubmit(onSubmit)}
-          buttonText="Add Employee"
+          buttonText={isPending ? "Adding..."  : "Add Employee"}
           containerClass="my-3"
+          isLoading={isPending}
         />
       </div>
     </div>

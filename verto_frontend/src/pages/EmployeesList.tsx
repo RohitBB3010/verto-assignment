@@ -14,7 +14,7 @@ export default function EmployeesList({toggleIsOpen} : {toggleIsOpen : () => voi
         <div className="title text-4xl font-semibold">Employee Management</div>
         <CustomButton buttonText="Add New Employee" onClick={toggleIsOpen} />
       </div>
-      <div className="employees-list">
+      <div className="employees-list block h-full overflow-y-auto">
         { employees.map((employee) => {
           return <EmployeeCard key={employee.id} employee={employee}/>
         }) }

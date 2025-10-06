@@ -1,6 +1,8 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, type UseMutationResult } from "@tanstack/react-query";
 import { addEmployeee, fetchEmployees } from "./employeeAPIs";
 import queryClient from "../queryClient";
+import type { AddEmployeeFormInput } from "../types/employee";
+import { toast } from "react-toastify";
 
 export const useFetchEmployees = () => {
     return useQuery({
@@ -10,12 +12,13 @@ export const useFetchEmployees = () => {
     });
 }
 
-export const useAddEmployee = (onSuccessCallback : () => void) => {
+export const useAddEmployee = (onSuccessCallback : () => void) : UseMutationResult<any, Error, AddEmployeeFormInput> => {
     return useMutation({
         mutationFn : addEmployeee,
         onSuccess : () => {
             queryClient.invalidateQueries({queryKey : ['employees']});
             onSuccessCallback();
+            toast('Sucessfully added new employee', { autoClose : 3000, hideProgressBar : false, position:'top-center'});
         },
         onError : ((error) => {
             //console.log(error);
