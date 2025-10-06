@@ -35,12 +35,20 @@ export default function EmployeesPage() {
     <div className="employees-page bg-[var(--color-background)] w-full h-full rounded-md flex">
       <div className="w-full h-full flex flex-row">
         <FiltersPanel
+        searchTerm={searchTerm}
+        filterRole={filterRole}
           setSearchTerm={setSearchTerm}
           setFilterRole={setFilterRole}
         />
 
         {isLoading ? (
-          <div>Loading...</div>
+          <div className="flex flex-col justify-center items-center h-full w-full">
+            <div
+              className="w-24 h-24 border-4 border-[var(--color-primary)] border-dashed rounded-full animate-spin"
+              style={{ animationDuration: "5s" }}
+            ></div>
+            <div className="text-xl font-semibold py-2"> Loading... </div>
+          </div>
         ) : (
           <div className="main-page py-6 px-6 flex-1 flex flex-col">
             <div className="title-row flex flex-row justify-between my-5">
