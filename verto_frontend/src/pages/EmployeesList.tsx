@@ -1,4 +1,4 @@
-import useFetchEmployees from "../apis/employeeQueries";
+import { useFetchEmployees } from "../apis/employeeQueries";
 import CustomButton from "../components/CustomButton";
 import type { Employee } from "../types/employee";
 import EmployeeCard from "./EmployeeCard";

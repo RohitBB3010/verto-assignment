@@ -1,17 +1,10 @@
 import { useForm } from "react-hook-form";
 import { FiX } from "react-icons/fi";
-import { Departments, type Department, type Role } from "../constants/enums";
+import { Departments, Roles, type Department, type Role } from "../constants/enums";
 import CustomButton from "../components/CustomButton";
 import FormInput from "../components/FormInput";
-
-type AddEmployeeInput = {
-  name: string;
-  email: string;
-  phone: string;
-  role: Role;
-  department: Department;
-  dateOfJoining: Date;
-};
+import type { AddEmployeeFormInput } from "../types/employee";
+import { useAddEmployee } from "../apis/employeeQueries";
 
 export default function AddEmployee({
   toggleIsOpen,
@@ -22,9 +15,15 @@ export default function AddEmployee({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<AddEmployeeInput>({
+  } = useForm<AddEmployeeFormInput>({
     mode: "onChange",
   });
+
+  const { mutate : addEmployee } = useAddEmployee(toggleIsOpen);
+
+  function onSubmit(data : AddEmployeeFormInput) : void {
+    addEmployee(data);
+  }
 
   return (
     <div className="add-page fixed inset-0 z-50 flex justify-center items-start py-10">
@@ -83,10 +82,10 @@ export default function AddEmployee({
         <div className="flex flex-row justify-between w-[80%] my-2">
           <div> Select role : </div>
           <select
-            {...register("department")}
+            {...register("role")}
             className="py-1 px-1 focus:outline-none focus:ring-1 focus:ring-blue-500 bg-gray-200 rounded-sm"
           >
-            {Departments.map((d) => {
+            {Roles.map((d) => {
               return (
                 <option key={d.value} value={d.value}>
                   {d.label}
@@ -98,12 +97,13 @@ export default function AddEmployee({
         <div className="flex flex-row justify-between w-[80%] my-3">
           <div>Date Of Joining</div>
           <input
+          {...register('dateOfJoining')}
             type="Date"
             className="py-1 px-1 focus:outline-none focus:ring-1 focus:ring-blue-500 bg-gray-200 rounded-sm cursor-pointer"
           ></input>
         </div>
         <CustomButton
-          onClick={() => {}}
+          onClick={handleSubmit(onSubmit)}
           buttonText="Add Employee"
           containerClass="my-3"
         />

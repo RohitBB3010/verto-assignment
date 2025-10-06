@@ -23,7 +23,7 @@ routes.post(
       .matches(/^[0-9]{10}$/)
       .withMessage("Phone number must be atleast 10 characters long"),
     body("role").trim().isIn(Roles).withMessage("Invalid role"),
-    body("dateOfJoinig").optional().isISO8601().withMessage("Invalid date"),
+    body("dateOfJoining").isISO8601().withMessage("Invalid date"),
   ],
   addEmployee
 );

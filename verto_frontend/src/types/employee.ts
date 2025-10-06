@@ -9,3 +9,12 @@ export type Employee = {
     role : Role,
     dateOfJoining : Date
 }
+
+export type AddEmployeeFormInput = {
+    name : string,
+    email : string,
+    phone : string,
+    deparment : Department,
+    role : Role,
+    dateOfJoining : Date | string
+}

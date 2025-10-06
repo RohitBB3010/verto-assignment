@@ -1,7 +1,7 @@
 import EmployeesPage from "./pages/EmployeesPage";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
+import queryClient from "./queryClient";
 
-const queryClient = new QueryClient();
 
 function App() {
   return (
