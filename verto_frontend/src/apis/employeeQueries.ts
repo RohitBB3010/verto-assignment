@@ -12,7 +12,6 @@ import {
 import queryClient from "../queryClient";
 import type { AddEmployeeFormInput } from "../types/employee";
 import { toast } from "react-toastify";
-import { type Role } from "../constants/enums";
 
 export const useFetchEmployees = () => {
   return useQuery({

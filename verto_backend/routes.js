@@ -46,7 +46,7 @@ routes.put(
       .matches(/^[6-9]\d{9}$/)
       .withMessage("Phone number must be atleast 10 characters long"),
     body("role").optional().trim().isIn(Roles).withMessage("Invalid role"),
-    body("dateOfJoinig").optional().isISO8601().withMessage("Invalid date"),
+    body("dateOfJoining").optional().isISO8601().withMessage("Invalid date"),
   ],
   updateEmployeeData
 );

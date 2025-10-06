@@ -23,7 +23,7 @@ export default function AddEmployee({
     handleSubmit,
     formState: { errors, dirtyFields },
   } = useForm<AddEmployeeFormInput>({
-    mode: "onChange",
+    mode: "onSubmit",
     defaultValues: employee ? {
       name : employee.name,
       email : employee.email,
