@@ -1,6 +1,4 @@
-Here’s a complete, clean, and copy-paste-ready **README.md** for your **Employee Data Management App**:
 
-````markdown
 # Employee Data Management App
 
 A simple web-based application to manage employee data, built with **React (frontend)** and **Node.js + SQLite (backend)**.  
